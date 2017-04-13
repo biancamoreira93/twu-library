@@ -28,31 +28,34 @@ public class Book {
         return yearPublished;
     }
 
-    public boolean checkoutBook(){
+    public String checkoutBook(){
         if (this.bookCheckedOut){
-            System.out.println("That book is not available.\n");
-            return false;
-        }else{
-            System.out.println("Book: " + this.title + " checked out!\n");
-            System.out.println("Thank you! Enjoy the book.\n");
-            this.bookCheckedOut = true;
-            return true;
+            return "That book is not available.\n";
         }
+
+        this.bookCheckedOut = true;
+        return "Thank you! Enjoy the book.\n";
     }
 
-    public boolean returnBook(){
+    public String returnBook(){
         if (this.bookCheckedOut){
-            System.out.println("Thank you for returning the book.\n");
+
             this.bookCheckedOut = false;
-            return true;
-        }else{
-            System.out.println("That's not a valid book to return.\n");
-            return false;
+            return "Thank you for returning the book.\n";
         }
+
+        return "That's not a valid book to return.\n";
     }
 
+    public boolean getBookCheckedOut(){
+        return this.bookCheckedOut;
+    }
 
-    public boolean getBookCheckedOut() {
-        return bookCheckedOut;
+    public String getBookDetails() {
+        String bookDetails = "Title: " + this.getTitle() + "\n";
+        bookDetails += "Author: " + this.getAuthorsName() + "\n";
+        bookDetails += "Year: " + this.getYearPublished() + "\n\n";
+
+        return bookDetails;
     }
 }
