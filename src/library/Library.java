@@ -8,64 +8,50 @@ import java.util.ArrayList;
 public class Library {
 
     private ArrayList<Book> booksList = new ArrayList<Book>();
-    private int menuOption;
+    private static Library library = new Library();
 
-    public Library(){
-        booksList.add(new Book("A Luz Atraves da Janela", "Lucinda Riley", 2009));
-        booksList.add(new Book("Harry Potter Box", "JK Rowling", 2001));
-        booksList.add(new Book("Game of Thrones", "G R Martin", 2005));
+    public static Library getInstance(){
+        return library;
     }
 
     public ArrayList<Book> getBooksList(){
         return booksList;
     }
 
-    public void setMenuOption(int menuOption) {
-        this.menuOption = menuOption;
+    public void addBook(Book book) {
+        booksList.add(book);
     }
 
-    public String welcomeMessage() {
-        return "Hello! Welcome to the Online Library!";
-    }
-
-
-    private String showBooksListAndInfo() {
+    public String showBooksListAndInfo() {
         String booksListReturn = "";
-        for (int i=0; i<booksList.size(); i++){
-            if (!booksList.get(i).getBookCheckedOut()){
-                booksListReturn += "Title: " + booksList.get(i).getTitle() + "\n";
-                booksListReturn += "Author: " + booksList.get(i).getAuthorsName() + "\n";
-                booksListReturn += "Year: " + booksList.get(i).getYearPublished() + "\n\n";
+        int booksIndex = 0;
+
+        if (!isBookListEmpty()) {
+            for (Book book : booksList) {
+                if (!book.getBookCheckedOut()) {
+                    booksListReturn += "Book's index: " + booksIndex + "\n" + book.getBookDetails();
+                }
+                booksIndex++;
             }
+            return booksListReturn;
         }
-        return booksListReturn;
+
+        return "Library is empty!";
     }
 
-    public boolean libraryMenu(){
 
-        System.out.println(showLibraryMenuItems());
-        System.out.println(choseALibraryMenuOption(menuOption));
-
+    public boolean isBookListEmpty() {
+        if (booksList.size()>0){
+            return false;
+        }
         return true;
     }
 
-    private String showLibraryMenuItems(){
-        String menuOptions = "Menu \n-----------------------\n";
-        menuOptions += "0 - List Books\n";
-        menuOptions += "9 - Quit\n";
-
-        return menuOptions;
+    public String returnBook(int bookIndex) {
+        return booksList.get(bookIndex).returnBook();
     }
 
-    private String choseALibraryMenuOption(int chosenOption) {
-        String chosenReturn;
-
-        if (chosenOption==0){
-            chosenReturn = showBooksListAndInfo();
-        }else{
-            chosenReturn = "Select a valid option!";
-        }
-
-        return chosenReturn;
+    public String checkoutBook(int bookIndex) {
+        return booksList.get(bookIndex).checkoutBook();
     }
 }

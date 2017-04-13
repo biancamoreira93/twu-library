@@ -1,5 +1,6 @@
 package test;
 
+import library.Book;
 import library.Library;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,48 +12,55 @@ import static org.junit.Assert.*;
  */
 public class LibraryTest {
 
-    Library library;
 
-    @Before
-    public void init(){
-        library = new Library();
+    @Test
+    public void shouldAddABookToLibrary(){
+        Library library = Library.getInstance();
+        Book book = new Book("A Luz Atraves da Janela", "Lucinda Riley", 2009);
+        library.addBook(book);
+
+        assertEquals(book.getTitle(), library.getBooksList().get(0).getTitle());
     }
 
     @Test
-    public void shouldPrintWelcomeMessage(){
-        String expectedReturn = "Hello! Welcome to the Online Library!";
+    public void shouldReturnAllBooksDetails(){
+        Library library = Library.getInstance();
+        Book book = new Book("A Luz Atraves da Janela", "Lucinda Riley", 2009);
+        library.addBook(book);
+        Book expectedBook = library.getBooksList().get(0);
 
-        assertEquals(expectedReturn, library.welcomeMessage());
+        assertEquals(expectedBook, book);
     }
 
     @Test
-    public void shouldShowLibraryMenuAndThenQuit(){
-        library.setMenuOption(9);
+    public void shouldReturnTrueWhenBooksListIsEmpty(){
+        Library library = Library.getInstance();
 
-        assertEquals(true, library.libraryMenu());
+        assertEquals(true, library.isBookListEmpty());
+
     }
 
     @Test
-    public void shouldShowLibraryMenuAndGetListBooks(){
-        library.setMenuOption(0);
+    public void shouldShowReturningMessageWhenBookIsReturned(){
+        Library library = Library.getInstance();
+        Book book = new Book("A Luz Atraves da Janela", "Lucinda Riley", 2009);
+        library.addBook(book);
+        library.checkoutBook(0);
 
-        assertEquals(true, library.libraryMenu());
+        String expectedReturn = "Thank you for returning the book.\n";
+
+        assertEquals(expectedReturn, library.returnBook(0));
     }
 
     @Test
-    public void shouldSetABookFromBookListChecked(){
-        library.getBooksList().get(1).checkoutBook();
-        library.setMenuOption(0);
+    public void shouldShowNotValidMessageWhenBookIsReturned(){
+        Library library = Library.getInstance();
+        Book book = new Book("A Luz Atraves da Janela", "Lucinda Riley", 2009);
+        library.addBook(book);
 
-        assertEquals(true, library.libraryMenu());
+        String expectedReturn = "That's not a valid book to return.\n";
+
+        assertEquals(expectedReturn, library.returnBook(0));
     }
-
-    @Test
-    public void shouldShowLibraryMenuAndGetInvalidOption(){
-        library.setMenuOption(1);
-
-        assertEquals(true, library.libraryMenu());
-    }
-
 
 }
