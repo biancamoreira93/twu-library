@@ -48,10 +48,17 @@ public class Library {
     }
 
     public String returnBook(int bookIndex) {
-        return booksList.get(bookIndex).returnBook();
+        if (booksList.size()>0){
+            return booksList.get(bookIndex).returnBook();
+        }
+        return "Library is empty!";
     }
 
     public String checkoutBook(int bookIndex) {
-        return booksList.get(bookIndex).checkoutBook();
+        if (booksList.size()>0) {
+            return booksList.get(bookIndex).checkoutBook();
+        }
+
+        return "Library is empty!";
     }
 }

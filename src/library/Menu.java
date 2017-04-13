@@ -51,10 +51,9 @@ public class Menu {
     public boolean showMenu(){
 
         do {
-            this.menuOption = Integer.valueOf(keyboard.nextLine());
             try {
-
                 System.out.println(getMenuItems());
+                this.menuOption = Integer.valueOf(keyboard.nextLine());
                 System.out.println(choseALibraryMenuOption(this.menuOption));
 
             } catch (Exception e) {
