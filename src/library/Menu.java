@@ -57,7 +57,6 @@ public class Menu {
                 System.out.println(choseALibraryMenuOption(this.menuOption));
 
             } catch (Exception e) {
-                /*todo treat exception*/
                 e.printStackTrace();
             }
 
